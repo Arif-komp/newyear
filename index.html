@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animasi Transisi Tahun Baru</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(to bottom, #0d1b2a, #1b263b);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #fff;
+        font-family: "Arial", sans-serif;
+      }
+
+      .container {
+        position: relative;
+        font-size: 5rem;
+        font-weight: bold;
+      }
+
+      .number {
+        display: inline-block;
+        position: relative;
+      }
+
+      .number span {
+        display: inline-block;
+      }
+
+      .number .move-out {
+        animation: moveOut 2s forwards ease-in-out;
+      }
+
+      .number .move-in {
+        animation: moveIn 2s forwards ease-in-out;
+      }
+
+      @keyframes moveOut {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-150px);
+          opacity: 0;
+        }
+      }
+
+      @keyframes moveIn {
+        0% {
+          transform: translateY(150px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .lights {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .light {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: yellow;
+        border-radius: 50%;
+        box-shadow: 0 0 10px yellow;
+        animation: twinkle 1.5s infinite ease-in-out alternate;
+      }
+
+      @keyframes twinkle {
+        from {
+          opacity: 0.5;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .firework {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: red;
+        border-radius: 50%;
+        animation: explode 2s infinite ease-out;
+      }
+
+      @keyframes explode {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(10);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <span class="number">202<span id="digit4">4</span></span>
+    </div>
+    <div class="lights"></div>
+
+    <script>
+      const digit4 = document.getElementById("digit4");
+      setTimeout(() => {
+        digit4.classList.add("move-out");
+        setTimeout(() => {
+          digit4.innerText = "5";
+          digit4.classList.remove("move-out");
+          digit4.classList.add("move-in");
+        }, 2000);
+      }, 1000);
+
+      // Lampu Hias
+      const lightsContainer = document.querySelector(".lights");
+      for (let i = 0; i < 50; i++) {
+        const light = document.createElement("div");
+        light.className = "light";
+        light.style.left = `${Math.random() * 100}vw`;
+        light.style.top = `${Math.random() * 100}vh`;
+        light.style.animationDelay = `${Math.random()}s`;
+        lightsContainer.appendChild(light);
+      }
+
+      // Kembang Api
+      function createFirework() {
+        const firework = document.createElement("div");
+        firework.className = "firework";
+        firework.style.left = `${Math.random() * 100}vw`;
+        firework.style.top = `${Math.random() * 100}vh`;
+        document.body.appendChild(firework);
+        setTimeout(() => firework.remove(), 2000);
+      }
+      setInterval(createFirework, 800);
+    </script>
+  </body>
+</html>
